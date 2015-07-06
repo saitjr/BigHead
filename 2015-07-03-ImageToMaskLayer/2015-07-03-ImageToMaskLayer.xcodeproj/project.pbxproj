@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		583461CA38D03A0A2112C0C6 /* libPods-2015-07-03-ImageToMaskLayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF770714F059D27A7C76B619 /* libPods-2015-07-03-ImageToMaskLayer.a */; };
+		961ABEDB1B4929C800284A1A /* TResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961ABEDA1B4929C800284A1A /* TResultView.m */; };
 		96C389B91B47EAB0009C8E35 /* TBigHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B41B47EAB0009C8E35 /* TBigHeadView.m */; };
 		96C389BA1B47EAB0009C8E35 /* TDrawPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B61B47EAB0009C8E35 /* TDrawPath.m */; };
 		96C389BB1B47EAB0009C8E35 /* TDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B81B47EAB0009C8E35 /* TDrawView.m */; };
@@ -33,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		0774C105E9674022A82812DC /* Pods-2015-07-03-ImageToMaskLayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2015-07-03-ImageToMaskLayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-2015-07-03-ImageToMaskLayer/Pods-2015-07-03-ImageToMaskLayer.release.xcconfig"; sourceTree = "<group>"; };
+		961ABED91B4929C800284A1A /* TResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TResultView.h; sourceTree = "<group>"; };
+		961ABEDA1B4929C800284A1A /* TResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TResultView.m; sourceTree = "<group>"; };
 		96C389B31B47EAB0009C8E35 /* TBigHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBigHeadView.h; sourceTree = "<group>"; };
 		96C389B41B47EAB0009C8E35 /* TBigHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBigHeadView.m; sourceTree = "<group>"; };
 		96C389B51B47EAB0009C8E35 /* TDrawPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDrawPath.h; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 			children = (
 				96C389B31B47EAB0009C8E35 /* TBigHeadView.h */,
 				96C389B41B47EAB0009C8E35 /* TBigHeadView.m */,
+				961ABED91B4929C800284A1A /* TResultView.h */,
+				961ABEDA1B4929C800284A1A /* TResultView.m */,
 				96C389B51B47EAB0009C8E35 /* TDrawPath.h */,
 				96C389B61B47EAB0009C8E35 /* TDrawPath.m */,
 				96C389B71B47EAB0009C8E35 /* TDrawView.h */,
@@ -308,6 +313,7 @@
 				96C389B91B47EAB0009C8E35 /* TBigHeadView.m in Sources */,
 				96DE8D501B46685E00763D49 /* ViewController.m in Sources */,
 				96DE8D4D1B46685E00763D49 /* AppDelegate.m in Sources */,
+				961ABEDB1B4929C800284A1A /* TResultView.m in Sources */,
 				96DE8D4A1B46685E00763D49 /* main.m in Sources */,
 				96C389BA1B47EAB0009C8E35 /* TDrawPath.m in Sources */,
 				96C389BB1B47EAB0009C8E35 /* TDrawView.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "TBigHeadView.h"
 #import "TDrawView.h"
+#import "TResultView.h"
 #import <TKit.h>
 
 @interface TBigHeadView ()
@@ -75,6 +76,7 @@
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView screenShot];
     UIImage *image3 = [image2 clipWithRect:self.touchView.imageRect];
+//    [self nonTransparentFrameWithImage:image3 estimateFrame:self.touchView.imageRect];
     TSaveFileWithPathAndName(TSandBoxPathWithFinderType(TSandBoxFinderDocument), @"1.png", UIImagePNGRepresentation(image3), TFileImage, YES);
 }
 
