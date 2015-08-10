@@ -54,8 +54,9 @@
 
 - (UIImageView *)generalImageView {
     
-    UIImage *image = [UIImage imageNamed:@"4714-11.jpg"];
+    UIImage *image = [UIImage imageNamed:@"宁泽涛.jpg"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.frame = self.bounds;
     return imageView;
 }
@@ -76,7 +77,6 @@
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView screenShot];
     UIImage *image3 = [image2 clipWithRect:self.touchView.imageRect];
-//    [self nonTransparentFrameWithImage:image3 estimateFrame:self.touchView.imageRect];
     TSaveFileWithPathAndName(TSandBoxPathWithFinderType(TSandBoxFinderDocument), @"1.png", UIImagePNGRepresentation(image3), TFileImage, YES);
 }
 

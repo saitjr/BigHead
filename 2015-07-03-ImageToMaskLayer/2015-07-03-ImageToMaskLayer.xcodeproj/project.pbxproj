@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		583461CA38D03A0A2112C0C6 /* libPods-2015-07-03-ImageToMaskLayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF770714F059D27A7C76B619 /* libPods-2015-07-03-ImageToMaskLayer.a */; };
 		961ABEDB1B4929C800284A1A /* TResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961ABEDA1B4929C800284A1A /* TResultView.m */; };
+		96BF26651B78B09D00B98E93 /* 宁泽涛.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 96BF26641B78B09D00B98E93 /* 宁泽涛.jpg */; };
 		96C389B91B47EAB0009C8E35 /* TBigHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B41B47EAB0009C8E35 /* TBigHeadView.m */; };
 		96C389BA1B47EAB0009C8E35 /* TDrawPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B61B47EAB0009C8E35 /* TDrawPath.m */; };
 		96C389BB1B47EAB0009C8E35 /* TDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C389B81B47EAB0009C8E35 /* TDrawView.m */; };
@@ -19,7 +20,6 @@
 		96DE8D551B46685E00763D49 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96DE8D541B46685E00763D49 /* Images.xcassets */; };
 		96DE8D581B46685E00763D49 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96DE8D561B46685E00763D49 /* LaunchScreen.xib */; };
 		96DE8D641B46685E00763D49 /* _015_07_03_ImageToMaskLayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DE8D631B46685E00763D49 /* _015_07_03_ImageToMaskLayerTests.m */; };
-		96DE8D741B466D1300763D49 /* 4714-11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 96DE8D731B466D1300763D49 /* 4714-11.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +36,7 @@
 		0774C105E9674022A82812DC /* Pods-2015-07-03-ImageToMaskLayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2015-07-03-ImageToMaskLayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-2015-07-03-ImageToMaskLayer/Pods-2015-07-03-ImageToMaskLayer.release.xcconfig"; sourceTree = "<group>"; };
 		961ABED91B4929C800284A1A /* TResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TResultView.h; sourceTree = "<group>"; };
 		961ABEDA1B4929C800284A1A /* TResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TResultView.m; sourceTree = "<group>"; };
+		96BF26641B78B09D00B98E93 /* 宁泽涛.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "宁泽涛.jpg"; sourceTree = "<group>"; };
 		96C389B31B47EAB0009C8E35 /* TBigHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBigHeadView.h; sourceTree = "<group>"; };
 		96C389B41B47EAB0009C8E35 /* TBigHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBigHeadView.m; sourceTree = "<group>"; };
 		96C389B51B47EAB0009C8E35 /* TDrawPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDrawPath.h; sourceTree = "<group>"; };
@@ -55,7 +56,6 @@
 		96DE8D5D1B46685E00763D49 /* 2015-07-03-ImageToMaskLayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "2015-07-03-ImageToMaskLayerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96DE8D621B46685E00763D49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96DE8D631B46685E00763D49 /* _015_07_03_ImageToMaskLayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _015_07_03_ImageToMaskLayerTests.m; sourceTree = "<group>"; };
-		96DE8D731B466D1300763D49 /* 4714-11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "4714-11.jpg"; sourceTree = "<group>"; };
 		BF770714F059D27A7C76B619 /* libPods-2015-07-03-ImageToMaskLayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-2015-07-03-ImageToMaskLayer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3495CCFC3798AD673A371E /* Pods-2015-07-03-ImageToMaskLayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2015-07-03-ImageToMaskLayer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-2015-07-03-ImageToMaskLayer/Pods-2015-07-03-ImageToMaskLayer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,8 +130,8 @@
 				96DE8D4C1B46685E00763D49 /* AppDelegate.m */,
 				96DE8D4E1B46685E00763D49 /* ViewController.h */,
 				96DE8D4F1B46685E00763D49 /* ViewController.m */,
+				96BF26641B78B09D00B98E93 /* 宁泽涛.jpg */,
 				96C389B21B47EAB0009C8E35 /* TBigHeadView */,
-				96DE8D731B466D1300763D49 /* 4714-11.jpg */,
 				96DE8D511B46685E00763D49 /* Main.storyboard */,
 				96DE8D541B46685E00763D49 /* Images.xcassets */,
 				96DE8D561B46685E00763D49 /* LaunchScreen.xib */,
@@ -257,9 +257,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				96DE8D531B46685E00763D49 /* Main.storyboard in Resources */,
-				96DE8D741B466D1300763D49 /* 4714-11.jpg in Resources */,
 				96DE8D581B46685E00763D49 /* LaunchScreen.xib in Resources */,
 				96DE8D551B46685E00763D49 /* Images.xcassets in Resources */,
+				96BF26651B78B09D00B98E93 /* 宁泽涛.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
