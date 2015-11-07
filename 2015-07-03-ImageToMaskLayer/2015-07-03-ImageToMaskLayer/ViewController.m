@@ -9,7 +9,9 @@
 #import "ViewController.h"
 #import "TDrawView.h"
 #import "TBigHeadView.h"
-#import <TKit.h>
+
+#define SCREEN_WIDTH CGRectGetWidth([UIScreen mainScreen].bounds)
+#define SCREEN_HEIGHT CGRectGetHeight([UIScreen mainScreen].bounds)
 
 @interface ViewController ()
 
@@ -30,7 +32,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    TBigHeadView *originView = [[TBigHeadView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 100)];
+    TBigHeadView *originView = [[TBigHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 100)];
     [self.view addSubview:originView];
     self.originView = originView;
 }
