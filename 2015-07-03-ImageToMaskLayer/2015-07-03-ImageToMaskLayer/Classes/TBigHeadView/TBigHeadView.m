@@ -12,12 +12,15 @@
 #import "UIImage+STBasicTools.h"
 #import "UIView+STBasicTools.h"
 
+#import "XTPasterStageView.h"
+
 @interface TBigHeadView ()
 
 @property (weak, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) UIImageView *hiddenImageView;
 
 @property (weak, nonatomic) TDrawView *touchView;
+@property (weak, nonatomic) XTPasterStageView *stageView;
 
 @end
 
@@ -71,6 +74,7 @@
 
 - (void)endDrawing {
     
+    self.touchView.userInteractionEnabled = NO;
     
     UIImage *image = [self.touchView st_screenShot];
     CALayer *maskLayer = [CALayer layer];
@@ -79,7 +83,23 @@
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView st_screenShot];
     UIImage *image3 = [image2 st_clipWithRect:self.touchView.imageRect];
-    [self saveImage:image3];
+//    [self saveImage:image3];
+    
+    [self pinToScreenWithImage:image3 recentFrame:self.touchView.imageRect];
+    
+}
+
+- (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
+    
+    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:recentFrame];
+    stageView.originImage = image;
+    stageView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:stageView];
+    
+    self.stageView = stageView;
+    
+    
+    [self.stageView addPasterWithImg:image];
 }
 
 - (void)saveImage:(UIImage *)image {

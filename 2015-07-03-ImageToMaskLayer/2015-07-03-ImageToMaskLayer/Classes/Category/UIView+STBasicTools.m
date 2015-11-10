@@ -6,16 +6,16 @@
 //  Copyright (c) 2015年 tangjr. All rights reserved.
 //
 
-#import "UIView+TBasicTools.h"
+#import "UIView+STBasicTools.h"
 
 @implementation UIView (STBasicTools)
 
-- (void)removeAllSubviews {
+- (void)st_removeAllSubviews {
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
-- (UIViewController *)currentViewController {
+- (UIViewController *)st_currentViewController {
     
     UIView *tempView = self;
     
@@ -33,7 +33,7 @@
     return nil;
 }
 
-- (UIImage *)screenShot {
+- (UIImage *)st_screenShot {
     
     UIGraphicsBeginImageContext(self.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();

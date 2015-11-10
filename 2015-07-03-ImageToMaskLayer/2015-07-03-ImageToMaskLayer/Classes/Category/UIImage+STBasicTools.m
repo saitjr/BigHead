@@ -51,7 +51,7 @@
     
     CGFloat scale = width / maxSize.width > height / maxSize.height ? width / maxSize.width : height / maxSize.height;
     
-    return [self scaleWithScale:scale];
+    return [self st_scaleWithScale:scale];
 }
 
 - (UIImage *)st_scaleWithScale:(CGFloat)scale {
