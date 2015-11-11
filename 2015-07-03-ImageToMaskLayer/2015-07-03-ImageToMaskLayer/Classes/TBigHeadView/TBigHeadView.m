@@ -12,15 +12,15 @@
 #import "UIImage+STBasicTools.h"
 #import "UIView+STBasicTools.h"
 
-#import "XTPasterStageView.h"
+#import "XTPasterView.h"
 
-@interface TBigHeadView ()
+@interface TBigHeadView () <XTPasterViewDelegate>
 
 @property (weak, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) UIImageView *hiddenImageView;
 
 @property (weak, nonatomic) TDrawView *touchView;
-@property (weak, nonatomic) XTPasterStageView *stageView;
+@property (weak, nonatomic) XTPasterView *pasterView;
 
 @end
 
@@ -41,6 +41,7 @@
 - (void)setupImageView {
     
     UIImageView *imageView = [self generalImageView];
+    imageView.userInteractionEnabled = YES;
     [self addSubview:imageView];
     self.imageView = imageView;
     
@@ -85,18 +86,26 @@
     
     [self pinToScreenWithImage:image3 recentFrame:self.touchView.imageRect];
     self.touchView.hidden = YES;
+    self.hiddenImageView.hidden = YES;
 }
 
 - (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
-    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:self.imageView.frame];
-    stageView.originImage = self.imageView.image;
-    stageView.backgroundColor = [UIColor orangeColor];
-    [self addSubview:stageView];
+//    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:self.imageView.frame];
+//    stageView.originImage = self.imageView.image;
+//    stageView.backgroundColor = [UIColor orangeColor];
+//    [self addSubview:stageView];
+//    
+//    self.stageView = stageView;
+//    
+//    [self.stageView addPasterWithImg:image];
     
-    self.stageView = stageView;
+    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView
+                                                     pasterID:1
+                                                          img:image];
+//    pasterView.delegate = self;
     
-    [self.stageView addPasterWithImg:image];
+    self.pasterView = pasterView;
 }
 
 - (void)saveImage:(UIImage *)image {
@@ -126,6 +135,23 @@
 - (void)clearDrawing {
     
     self.touchView.isClear = YES;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    self.pasterView.isOnFirst = NO;
+}
+
+#pragma mark - XTPasterViewDelegate
+
+- (void)makePasterBecomeFirstRespond:(int)pasterID {
+    
+    NSLog(@"----%d", pasterID);
+}
+
+- (void)removePaster:(int)pasterID {
+    
+    NSLog(@">>>>%d", pasterID);
 }
 
 #pragma mark - Private methods
