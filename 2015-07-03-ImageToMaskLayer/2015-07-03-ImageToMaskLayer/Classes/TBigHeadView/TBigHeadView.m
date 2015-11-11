@@ -74,8 +74,6 @@
 
 - (void)endDrawing {
     
-    self.touchView.userInteractionEnabled = NO;
-    
     UIImage *image = [self.touchView st_screenShot];
     CALayer *maskLayer = [CALayer layer];
     maskLayer.frame = self.bounds;
@@ -86,18 +84,17 @@
 //    [self saveImage:image3];
     
     [self pinToScreenWithImage:image3 recentFrame:self.touchView.imageRect];
-    
+    self.touchView.hidden = YES;
 }
 
 - (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
-    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:recentFrame];
-    stageView.originImage = image;
-    stageView.backgroundColor = [UIColor whiteColor];
+    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:self.imageView.frame];
+    stageView.originImage = self.imageView.image;
+    stageView.backgroundColor = [UIColor orangeColor];
     [self addSubview:stageView];
     
     self.stageView = stageView;
-    
     
     [self.stageView addPasterWithImg:image];
 }
