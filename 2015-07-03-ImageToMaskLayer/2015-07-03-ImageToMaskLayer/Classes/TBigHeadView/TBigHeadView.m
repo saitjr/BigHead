@@ -38,31 +38,64 @@
     return self;
 }
 
+- (instancetype)init {
+    
+    self = [super init];
+    
+    if (self) {
+        
+        [self setupImageView];
+    }
+    
+    return self;
+}
+
+- (void)awakeFromNib {
+    
+    [super awakeFromNib];
+    [self setupImageView];
+}
+
 - (void)setupImageView {
+    
+    // 如果imageView与hiddenImageView已经有值了，就不再重复走这个方法（一般都没有，防止重复走）
+    if (self.imageView && self.hiddenImageView) {
+        return;
+    }
     
     UIImageView *imageView = [self generalImageView];
     imageView.userInteractionEnabled = YES;
-    [self addSubview:imageView];
     self.imageView = imageView;
     
     UIImageView *hiddenImageView = [self generalImageView];
-    [self addSubview:hiddenImageView];
     self.hiddenImageView = hiddenImageView;
 }
 
 - (void)setupTouchView {
     
-    TDrawView *touchView = [[TDrawView alloc] initWithFrame:self.bounds];
+    TDrawView *touchView = [TDrawView new];
+    touchView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:touchView];
     self.touchView = touchView;
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
 }
 
 - (UIImageView *)generalImageView {
     
-    UIImage *image = [UIImage imageNamed:@"宁泽涛.jpg"];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    UIImageView *imageView = [UIImageView new];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.frame = self.bounds;
+    imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:imageView];
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    
     return imageView;
 }
 
@@ -88,14 +121,6 @@
     self.hiddenImageView.hidden = YES;
 }
 
-- (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
-    
-    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:1 image:image];
-    pasterView.delegate = self;
-    
-    self.pasterView = pasterView;
-}
-
 - (void)continueDrawing {
     
     self.touchView.isClear = NO;
@@ -105,6 +130,13 @@
     
     self.touchView.isClear = YES;
 }
+
+- (void)composeImageWithSuccess:(TSuccessBlock)success fail:(TFailBlock)fail {
+    
+    
+}
+
+#pragma mark - Touch
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
@@ -125,12 +157,27 @@
 
 #pragma mark - Private methods
 
+- (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
+    
+    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:1 image:image];
+    pasterView.delegate = self;
+    
+    self.pasterView = pasterView;
+}
+
 #pragma mark - Property getter/setter
 
 - (void)setLineWidth:(CGFloat)lineWidth {
     
     _lineWidth = lineWidth;
     self.touchView.lineWidth = lineWidth;
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage {
+    
+    _backgroundImage = backgroundImage;
+    self.imageView.image = backgroundImage;
+    self.hiddenImageView.image = backgroundImage;
 }
 
 @end

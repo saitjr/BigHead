@@ -15,8 +15,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) TDrawView *touchView;
-@property (weak, nonatomic) TBigHeadView *originView;
+@property (weak, nonatomic) IBOutlet TBigHeadView *bigHeadView;
 
 - (IBAction)sliderValueChanged:(UISlider *)sender;
 - (IBAction)finishButotnTapped:(UIButton *)sender;
@@ -32,34 +31,32 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    TBigHeadView *originView = [[TBigHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 100)];
-    [self.view addSubview:originView];
-    self.originView = originView;
+    self.bigHeadView.backgroundImage = [UIImage imageNamed:@"宁泽涛.jpg"];
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
     
-    self.originView.lineWidth = 20 * sender.value + 10;
+    self.bigHeadView.lineWidth = 20 * sender.value + 10;
 }
 
 - (IBAction)finishButotnTapped:(UIButton *)sender {
     
-    [self.originView endDrawing];
+    [self.bigHeadView endDrawing];
 }
 
 - (IBAction)clearButtonTapped:(UIButton *)sender {
     
-    [self.originView clearDrawing];
+    [self.bigHeadView clearDrawing];
 }
 
 - (IBAction)continueButtonTapped:(UIButton *)sender {
     
-    [self.originView continueDrawing];
+    [self.bigHeadView continueDrawing];
 }
 
 - (IBAction)startButtonTapped:(UIButton *)sender {
     
-    [self.originView startDrawing];
+    [self.bigHeadView startDrawing];
 }
 
 @end
