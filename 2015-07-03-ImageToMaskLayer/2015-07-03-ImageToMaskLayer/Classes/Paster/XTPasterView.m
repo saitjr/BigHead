@@ -8,11 +8,15 @@
 
 #import "XTPasterView.h"
 
-static const CGFloat XTPasterSlide = 150.0;
 static const CGFloat XTFlexSilde = 15.0;
 static const CGFloat XTButtonSlide = 30.0;
 static const CGFloat XTBorderLineWidth = 1.0;
 static const CGFloat XTSecurityLength = 75.0;
+
+#define SELF_WIDTH CGRectGetWidth(self.frame)
+#define SELF_HEIGHT CGRectGetHeight(self.frame)
+#define IMAGE_VIEW_WIDTH CGRectGetWidth(self.frame) - XTButtonSlide
+#define IMAGE_VIEW_HEIGHT CGRectGetHeight(self.frame) - XTButtonSlide
 
 @interface XTPasterView () {
     
@@ -24,9 +28,9 @@ static const CGFloat XTSecurityLength = 75.0;
     CGRect  bgRect;
 }
 
-@property (strong, nonatomic) UIImageView *imgContentView;
 @property (strong, nonatomic) UIImageView *btDelete;
 @property (strong, nonatomic) UIImageView *btSizeCtrl;
+@property (assign, nonatomic) CGSize originSize;
 
 @end
 
@@ -43,7 +47,7 @@ static const CGFloat XTSecurityLength = 75.0;
 
 #pragma mark - init
 
-- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image {
+- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
     self = [super init];
     
@@ -55,7 +59,12 @@ static const CGFloat XTSecurityLength = 75.0;
         bgRect = bgView.frame;
         
         [self setupWithBGFrame:bgRect];
-        [self imgContentView];
+        
+        self.originSize = recentFrame.size;
+        CGRect newFrame = CGRectMake(CGRectGetMinX(recentFrame) - XTButtonSlide / 2, CGRectGetMinY(recentFrame) - XTButtonSlide / 2, CGRectGetWidth(recentFrame) + XTButtonSlide, CGRectGetWidth(recentFrame) + XTButtonSlide);
+        
+        self.frame = newFrame;
+        
         [self btDelete];
         [self btSizeCtrl];
         [bgView addSubview:self];
@@ -66,9 +75,6 @@ static const CGFloat XTSecurityLength = 75.0;
 
 - (void)setupWithBGFrame:(CGRect)bgFrame {
     
-    CGRect rect = CGRectZero;
-    rect.size = CGSizeMake(XTPasterSlide, XTPasterSlide);
-    self.frame = rect;
     self.center = CGPointMake(bgFrame.size.width / 2, bgFrame.size.height / 2);
     self.backgroundColor = nil;
     
@@ -135,17 +141,17 @@ static const CGFloat XTSecurityLength = 75.0;
             CGFloat finalWidth  = self.bounds.size.width + (wChange);
             CGFloat finalHeight = self.bounds.size.height + (wChange);
             
-            if (finalWidth > XTPasterSlide * (1 + 0.5)) {
-                finalWidth = XTPasterSlide * (1 + 0.5);
+            if (finalWidth > self.originSize.width * (1 + 0.5)) {
+                finalWidth = self.originSize.width * (1 + 0.5);
             }
-            if (finalWidth < XTPasterSlide * (1 - 0.5)) {
-                finalWidth = XTPasterSlide * (1 - 0.5);
+            if (finalWidth < self.originSize.width * (1 - 0.5)) {
+                finalWidth = self.originSize.width * (1 - 0.5);
             }
-            if (finalHeight > XTPasterSlide * (1 + 0.5)) {
-                finalHeight = XTPasterSlide * (1 + 0.5);
+            if (finalHeight > self.originSize.height * (1 + 0.5)) {
+                finalHeight = self.originSize.height * (1 + 0.5);
             }
-            if (finalHeight < XTPasterSlide * (1 - 0.5)) {
-                finalHeight = XTPasterSlide * (1 - 0.5);
+            if (finalHeight < self.originSize.height * (1 - 0.5)) {
+                finalHeight = self.originSize.height * (1 - 0.5);
             }
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, finalWidth, finalHeight);
             self.btSizeCtrl.frame = CGRectMake(self.bounds.size.width - XTButtonSlide, self.bounds.size.height - XTButtonSlide, XTButtonSlide, XTButtonSlide);
@@ -230,11 +236,7 @@ static const CGFloat XTSecurityLength = 75.0;
     
     [super setFrame:newFrame];
     
-    CGRect rect = CGRectZero;
-    CGFloat sliderContent = XTPasterSlide - XTFlexSilde * 2;
-    rect.origin = CGPointMake(XTFlexSilde, XTFlexSilde);
-    rect.size = CGSizeMake(sliderContent, sliderContent);
-    self.imgContentView.frame = rect;
+    self.imgContentView.frame = CGRectMake(XTFlexSilde, XTFlexSilde, IMAGE_VIEW_WIDTH, IMAGE_VIEW_HEIGHT);
     
     self.imgContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
@@ -260,12 +262,7 @@ static const CGFloat XTSecurityLength = 75.0;
     
     if (!_imgContentView) {
         
-        CGRect rect = CGRectZero;
-        CGFloat sliderContent = XTPasterSlide - XTFlexSilde * 2;
-        rect.origin = CGPointMake(XTFlexSilde, XTFlexSilde);
-        rect.size = CGSizeMake(sliderContent, sliderContent);
-        
-        _imgContentView = [[UIImageView alloc] initWithFrame:rect];
+        _imgContentView = [[UIImageView alloc] initWithFrame:CGRectMake(XTFlexSilde, XTFlexSilde, IMAGE_VIEW_WIDTH, IMAGE_VIEW_HEIGHT)];
         _imgContentView.backgroundColor = nil;
         _imgContentView.layer.borderColor = [UIColor whiteColor].CGColor;
         _imgContentView.layer.borderWidth = XTBorderLineWidth;

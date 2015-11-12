@@ -14,6 +14,8 @@
 
 #import "XTPasterView.h"
 
+static const NSInteger TPasterId = 1;
+
 @interface TBigHeadView () <XTPasterViewDelegate>
 
 @property (weak, nonatomic) UIImageView *imageView;
@@ -32,7 +34,7 @@
     
     if (self) {
         
-        [self setupImageView];
+        [self setupUI];
     }
     
     return self;
@@ -44,7 +46,7 @@
     
     if (self) {
         
-        [self setupImageView];
+        [self setupUI];
     }
     
     return self;
@@ -53,15 +55,21 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    [self setupImageView];
+    [self setupUI];
 }
 
-- (void)setupImageView {
+- (void)setupUI {
     
     // 如果imageView与hiddenImageView已经有值了，就不再重复走这个方法（一般都没有，防止重复走）
     if (self.imageView && self.hiddenImageView) {
         return;
     }
+    
+    self.clipsToBounds = YES;
+    [self setupImageView];
+}
+
+- (void)setupImageView {
     
     UIImageView *imageView = [self generalImageView];
     imageView.userInteractionEnabled = YES;
@@ -108,10 +116,10 @@
 
 - (void)endDrawing {
     
-    UIImage *image = [self.touchView st_screenShot];
+    UIImage *maskImage = [self.touchView st_screenShot];
     CALayer *maskLayer = [CALayer layer];
     maskLayer.frame = self.bounds;
-    maskLayer.contents = (__bridge id)image.CGImage;
+    maskLayer.contents = (__bridge id)maskImage.CGImage;
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView st_screenShot];
     UIImage *image3 = [image2 st_clipWithRect:self.touchView.imageRect];
@@ -147,21 +155,22 @@
 
 - (void)makePasterBecomeFirstRespond:(NSInteger)pasterID {
     
-    NSLog(@"----%ld", pasterID);
+    
 }
 
 - (void)removePaster:(NSInteger)pasterID {
     
-    NSLog(@">>>>%ld", pasterID);
+    
 }
 
 #pragma mark - Private methods
 
 - (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
-    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:1 image:image];
+    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:TPasterId image:image recentFrame:recentFrame];
+//    pasterView.frame = recentFrame;
+    pasterView.backgroundColor = [UIColor orangeColor];
     pasterView.delegate = self;
-    
     self.pasterView = pasterView;
 }
 

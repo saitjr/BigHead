@@ -20,13 +20,14 @@
 
 @interface XTPasterView : UIView
 
+@property (strong, nonatomic) UIImageView *imgContentView;
 @property (strong, nonatomic) UIImage *imagePaster;
 @property (assign, nonatomic) NSInteger pasterID;
 @property (assign, nonatomic) BOOL isOnFirst;
 @property (weak, nonatomic) id <XTPasterViewDelegate> delegate;
 
 
-- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image;
-- (void)remove ;
+- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image recentFrame:(CGRect)recentFrame;
+- (void)remove;
 
 @end
