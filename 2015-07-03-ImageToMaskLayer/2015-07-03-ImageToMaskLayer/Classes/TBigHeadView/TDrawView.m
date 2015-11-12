@@ -9,15 +9,21 @@
 #import "TDrawView.h"
 #import "TDrawPath.h"
 
+typedef struct TDrawBounds {
+    
+    CGFloat minX;
+    CGFloat minY;
+    CGFloat maxX;
+    CGFloat maxY;
+} TDrawBoundsBuffer;
+
+TDrawBoundsBuffer buffer = {NSIntegerMax, NSIntegerMax, NSIntegerMin, NSIntegerMin};
+
 @interface TDrawView ()
 
 @property (strong, nonatomic) TDrawPath *path;
 @property (strong, nonatomic) NSMutableArray *paths;
-
-@property (assign, nonatomic) CGFloat minX;
-@property (assign, nonatomic) CGFloat minY;
-@property (assign, nonatomic) CGFloat maxX;
-@property (assign, nonatomic) CGFloat maxY;
+//@property (assign, nonatomic) TDrawBoundsBuffer *buffer;
 
 @end
 
@@ -30,20 +36,9 @@
     if (self) {
         
         self.backgroundColor = [UIColor clearColor];
-        [self setupDatas];
     }
     
     return self;
-}
-
-#pragma mark - setup
-
-- (void)setupDatas {
-    
-    self.minX = NSIntegerMax;
-    self.minY = NSIntegerMax;
-    self.maxX = NSIntegerMin;
-    self.maxY = NSIntegerMin;
 }
 
 #pragma mark - Support methods
@@ -60,18 +55,11 @@
     CGFloat top = point.y - self.lineWidth / 2;
     CGFloat right = point.x + self.lineWidth / 2;
     CGFloat bottom = point.y + self.lineWidth / 2;
-    
-//    if (self.isClear) {
-//        
-//        if (_minX > ) {
-//            <#statements#>
-//        }
-//        return;
-//    }
-    _minX = _minX > left ? left : _minX;
-    _minY = _minY > top ? top : _minY;
-    _maxX = _maxX < right ? right : _maxX;
-    _maxY = _maxY < bottom ? bottom : _maxY;
+
+    buffer.minX = buffer.minX < left ? buffer.minX : left;
+    buffer.minY = buffer.minY < top ? buffer.minY : top;
+    buffer.maxX = buffer.maxX > right ? buffer.maxX : right;
+    buffer.maxY = buffer.maxY > bottom ? buffer.maxY : bottom;
 }
 
 #pragma mark - Touch methods
@@ -151,8 +139,9 @@
 
 - (CGRect)imageRect {
     
-    NSLog(@"%@", NSStringFromCGRect(CGRectMake(_minX, _minY, _maxX - _minX, _maxY - _minY)));
-    return CGRectMake(_minX, _minY, _maxX - _minX, _maxY - _minY);
+    CGRect frame = CGRectMake(buffer.minX, buffer.minY, buffer.maxX - buffer.minX, buffer.maxY - buffer.minY);
+    
+    return frame;
 }
 
 @end

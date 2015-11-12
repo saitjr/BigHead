@@ -12,20 +12,21 @@
 
 @protocol XTPasterViewDelegate <NSObject>
 
-- (void)makePasterBecomeFirstRespond:(int)pasterID;
-- (void)removePaster:(int)pasterID;
+- (void)makePasterBecomeFirstRespond:(NSInteger)pasterID;
+- (void)removePaster:(NSInteger)pasterID;
+
 @end
 
 
 @interface XTPasterView : UIView
 
 @property (strong, nonatomic) UIImage *imagePaster;
-@property (assign, nonatomic) int pasterID;
+@property (assign, nonatomic) NSInteger pasterID;
 @property (assign, nonatomic) BOOL isOnFirst;
 @property (weak, nonatomic) id <XTPasterViewDelegate> delegate;
 
 
-- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(int)pasterID img:(UIImage *)img;
-- (void)remove;
+- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image;
+- (void)remove ;
 
 @end

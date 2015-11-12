@@ -82,7 +82,6 @@
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView st_screenShot];
     UIImage *image3 = [image2 st_clipWithRect:self.touchView.imageRect];
-//    [self saveImage:image3];
     
     [self pinToScreenWithImage:image3 recentFrame:self.touchView.imageRect];
     self.touchView.hidden = YES;
@@ -91,40 +90,10 @@
 
 - (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
-//    XTPasterStageView *stageView = [[XTPasterStageView alloc] initWithFrame:self.imageView.frame];
-//    stageView.originImage = self.imageView.image;
-//    stageView.backgroundColor = [UIColor orangeColor];
-//    [self addSubview:stageView];
-//    
-//    self.stageView = stageView;
-//    
-//    [self.stageView addPasterWithImg:image];
-    
-    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView
-                                                     pasterID:1
-                                                          img:image];
-//    pasterView.delegate = self;
+    XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:1 image:image];
+    pasterView.delegate = self;
     
     self.pasterView = pasterView;
-}
-
-- (void)saveImage:(UIImage *)image {
-    
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    
-    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", path, @"1.png"];
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    // 如果路径不存在，则创建路径
-    if ([fileManager fileExistsAtPath:fullPath] == NO) {
-        
-        NSError *error = nil;
-        
-        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
-    }
-    
-    [UIImagePNGRepresentation(image) writeToFile:fullPath atomically:YES];
 }
 
 - (void)continueDrawing {
@@ -144,14 +113,14 @@
 
 #pragma mark - XTPasterViewDelegate
 
-- (void)makePasterBecomeFirstRespond:(int)pasterID {
+- (void)makePasterBecomeFirstRespond:(NSInteger)pasterID {
     
-    NSLog(@"----%d", pasterID);
+    NSLog(@"----%ld", pasterID);
 }
 
-- (void)removePaster:(int)pasterID {
+- (void)removePaster:(NSInteger)pasterID {
     
-    NSLog(@">>>>%d", pasterID);
+    NSLog(@">>>>%ld", pasterID);
 }
 
 #pragma mark - Private methods

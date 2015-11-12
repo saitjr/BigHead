@@ -8,12 +8,11 @@
 
 #import "XTPasterView.h"
 
-#define PASTER_SLIDE        150.0
-#define FLEX_SLIDE          15.0
-#define BT_SLIDE            30.0
-#define BORDER_LINE_WIDTH   1.0
-#define SECURITY_LENGTH     75.0
-
+static const CGFloat XTPasterSlide = 150.0;
+static const CGFloat XTFlexSilde = 15.0;
+static const CGFloat XTButtonSlide = 30.0;
+static const CGFloat XTBorderLineWidth = 1.0;
+static const CGFloat XTSecurityLength = 75.0;
 
 @interface XTPasterView () {
     
@@ -36,18 +35,22 @@
 - (void)remove {
     
     [self removeFromSuperview];
-    [self.delegate removePaster:self.pasterID];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(removePaster:)]) {
+        [self.delegate removePaster:self.pasterID];
+    }
 }
 
-#pragma mark - Initial
+#pragma mark - init
 
-- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(int)pasterID img:(UIImage *)img {
+- (instancetype)initWithBgView:(UIImageView *)bgView pasterID:(NSInteger)pasterID image:(UIImage *)image {
     
     self = [super init];
+    
     if (self) {
         
         self.pasterID = pasterID;
-        self.imagePaster = img;
+        self.imagePaster = image;
         
         bgRect = bgView.frame;
         
@@ -61,31 +64,58 @@
     return self;
 }
 
-
-- (void)setFrame:(CGRect)newFrame {
-    
-    [super setFrame:newFrame];
+- (void)setupWithBGFrame:(CGRect)bgFrame {
     
     CGRect rect = CGRectZero;
-    CGFloat sliderContent = PASTER_SLIDE - FLEX_SLIDE * 2;
-    rect.origin = CGPointMake(FLEX_SLIDE, FLEX_SLIDE);
-    rect.size = CGSizeMake(sliderContent, sliderContent);
-    self.imgContentView.frame = rect;
+    rect.size = CGSizeMake(XTPasterSlide, XTPasterSlide);
+    self.frame = rect;
+    self.center = CGPointMake(bgFrame.size.width / 2, bgFrame.size.height / 2);
+    self.backgroundColor = nil;
     
-    self.imgContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    [self addGestureRecognizer:tapGesture];
+
+    UIRotationGestureRecognizer *rotateGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotateGesture:)];
+    [self addGestureRecognizer:rotateGesture];
+    
+    self.userInteractionEnabled = YES;
+    
+    minWidth = self.bounds.size.width * 0.5;
+    minHeight = self.bounds.size.height * 0.5;
+  
+    deltaAngle = atan2(self.frame.origin.y + self.frame.size.height - self.center.y, self.frame.origin.x + self.frame.size.width - self.center.x);
 }
 
-- (void)resizeTranslate:(UIPanGestureRecognizer *)recognizer {
+#pragma mark - Gesture
+
+- (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
+    
+    self.isOnFirst = YES;
+    [self makePasterBecomeFirstRespond];
+}
+
+- (void)handleRotateGesture:(UIRotationGestureRecognizer *)rotateGesture {
+    
+    self.isOnFirst = YES;
+    [self makePasterBecomeFirstRespond];
+    
+    self.transform = CGAffineTransformRotate(self.transform, rotateGesture.rotation);
+    rotateGesture.rotation = 0;
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)recognizer {
     
     if ([recognizer state] == UIGestureRecognizerStateBegan) {
         prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
-    } else if ([recognizer state] == UIGestureRecognizerStateChanged) {
+        return;
+    }
+    if ([recognizer state] == UIGestureRecognizerStateChanged) {
         
         if (self.bounds.size.width < minWidth || self.bounds.size.height < minHeight) {
             
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, minWidth + 1, minHeight + 1);
-            self.btSizeCtrl.frame = CGRectMake(self.bounds.size.width - BT_SLIDE, self.bounds.size.height - BT_SLIDE, BT_SLIDE, BT_SLIDE);
+            self.btSizeCtrl.frame = CGRectMake(self.bounds.size.width - XTButtonSlide, self.bounds.size.height - XTButtonSlide, XTButtonSlide, XTButtonSlide);
             prevPoint = [recognizer locationInView:self];
         } else {
             
@@ -105,127 +135,52 @@
             CGFloat finalWidth  = self.bounds.size.width + (wChange);
             CGFloat finalHeight = self.bounds.size.height + (wChange);
             
-            if (finalWidth > PASTER_SLIDE * (1 + 0.5)) {
-                finalWidth = PASTER_SLIDE * (1 + 0.5);
+            if (finalWidth > XTPasterSlide * (1 + 0.5)) {
+                finalWidth = XTPasterSlide * (1 + 0.5);
             }
-            if (finalWidth < PASTER_SLIDE * (1 - 0.5)) {
-                finalWidth = PASTER_SLIDE * (1 - 0.5);
+            if (finalWidth < XTPasterSlide * (1 - 0.5)) {
+                finalWidth = XTPasterSlide * (1 - 0.5);
             }
-            if (finalHeight > PASTER_SLIDE * (1 + 0.5)) {
-                finalHeight = PASTER_SLIDE * (1 + 0.5);
+            if (finalHeight > XTPasterSlide * (1 + 0.5)) {
+                finalHeight = XTPasterSlide * (1 + 0.5);
             }
-            if (finalHeight < PASTER_SLIDE * (1 - 0.5)) {
-                finalHeight = PASTER_SLIDE * (1 - 0.5);
+            if (finalHeight < XTPasterSlide * (1 - 0.5)) {
+                finalHeight = XTPasterSlide * (1 - 0.5);
             }
-            
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, finalWidth, finalHeight);
-            
-            self.btSizeCtrl.frame = CGRectMake(self.bounds.size.width - BT_SLIDE, self.bounds.size.height - BT_SLIDE, BT_SLIDE, BT_SLIDE);
-            
+            self.btSizeCtrl.frame = CGRectMake(self.bounds.size.width - XTButtonSlide, self.bounds.size.height - XTButtonSlide, XTButtonSlide, XTButtonSlide);
             prevPoint = [recognizer locationOfTouch:0 inView:self];
         }
         
-        /* Rotation */
         float ang = atan2([recognizer locationInView:self.superview].y - self.center.y, [recognizer locationInView:self.superview].x - self.center.x);
-        
         float angleDiff = deltaAngle - ang;
-
         self.transform = CGAffineTransformMakeRotation(-angleDiff);
-        
         [self setNeedsDisplay];
-    } else if ([recognizer state] == UIGestureRecognizerStateEnded) {
+        return;
+    }
+    if ([recognizer state] == UIGestureRecognizerStateEnded) {
         prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        return;
     }
 }
 
-- (void)setImagePaster:(UIImage *)imagePaster {
-    
-    _imagePaster = imagePaster;
-    self.imgContentView.image = imagePaster;
-}
-
-- (void)setupWithBGFrame:(CGRect)bgFrame {
-    
-    CGRect rect = CGRectZero;
-    rect.size = CGSizeMake(PASTER_SLIDE, PASTER_SLIDE);
-    self.frame = rect;
-    self.center = CGPointMake(bgFrame.size.width / 2, bgFrame.size.height / 2);
-    self.backgroundColor = nil;
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    [self addGestureRecognizer:tapGesture];
-
-    UIRotationGestureRecognizer *rotateGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)];
-    [self addGestureRecognizer:rotateGesture];
-    
-    self.userInteractionEnabled = YES;
-    
-    minWidth   = self.bounds.size.width * 0.5;
-    minHeight  = self.bounds.size.height * 0.5;
-  
-    deltaAngle = atan2(self.frame.origin.y + self.frame.size.height - self.center.y, self.frame.origin.x + self.frame.size.width - self.center.x);
-}
-
-- (void)tap:(UITapGestureRecognizer *)tapGesture {
-    
-    NSLog(@"tap paster become first respond");
-    self.isOnFirst = YES;
-    [self.delegate makePasterBecomeFirstRespond:self.pasterID];
-}
-
-- (void)handlePinch:(UIPinchGestureRecognizer *)pinchGesture {
-    
-    self.isOnFirst = YES;
-    [self.delegate makePasterBecomeFirstRespond:self.pasterID];
-    
-    self.imgContentView.transform = CGAffineTransformScale(self.imgContentView.transform, pinchGesture.scale, pinchGesture.scale);
-    pinchGesture.scale = 1;
-}
-
-- (void)handleRotation:(UIRotationGestureRecognizer *)rotateGesture {
-    
-    self.isOnFirst = YES;
-    [self.delegate makePasterBecomeFirstRespond:self.pasterID];
-    
-    self.transform = CGAffineTransformRotate(self.transform, rotateGesture.rotation);
-    rotateGesture.rotation = 0;
-}
+#pragma mark - Touch
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
     self.isOnFirst = YES;
-    [self.delegate makePasterBecomeFirstRespond:self.pasterID];
+    [self makePasterBecomeFirstRespond];
 
     UITouch *touch = [touches anyObject];
     touchStart = [touch locationInView:self.superview];
 }
 
-- (void)translateUsingTouchLocation:(CGPoint)touchPoint {
+- (void)makePasterBecomeFirstRespond {
     
-    CGPoint newCenter = CGPointMake(self.center.x + touchPoint.x - touchStart.x, self.center.y + touchPoint.y - touchStart.y);
-    
-    // Ensure the translation won't cause the view to move offscreen. BEGIN
-    CGFloat midPointX = CGRectGetMidX(self.bounds);
-    
-    if (newCenter.x > self.superview.bounds.size.width - midPointX + SECURITY_LENGTH) {
-        newCenter.x = self.superview.bounds.size.width - midPointX + SECURITY_LENGTH;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(makePasterBecomeFirstRespond:)]) {
+        [self.delegate makePasterBecomeFirstRespond:self.pasterID];
     }
-    if (newCenter.x < midPointX - SECURITY_LENGTH) {
-        newCenter.x = midPointX - SECURITY_LENGTH;
-    }
-    
-    CGFloat midPointY = CGRectGetMidY(self.bounds);
-    
-    if (newCenter.y > self.superview.bounds.size.height - midPointY + SECURITY_LENGTH) {
-        newCenter.y = self.superview.bounds.size.height - midPointY + SECURITY_LENGTH;
-    }
-    if (newCenter.y < midPointY - SECURITY_LENGTH) {
-        newCenter.y = midPointY - SECURITY_LENGTH;
-    }
-    
-    // Ensure the translation won't cause the view to move offscreen. END
-    self.center = newCenter;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -242,34 +197,78 @@
     touchStart = touch;
 }
 
-#pragma mark -- Properties
+- (void)translateUsingTouchLocation:(CGPoint)touchPoint {
+    
+    CGPoint newCenter = CGPointMake(self.center.x + touchPoint.x - touchStart.x, self.center.y + touchPoint.y - touchStart.y);
+    
+    // Ensure the translation won't cause the view to move offscreen. BEGIN
+    CGFloat midPointX = CGRectGetMidX(self.bounds);
+    
+    if (newCenter.x > self.superview.bounds.size.width - midPointX + XTSecurityLength) {
+        newCenter.x = self.superview.bounds.size.width - midPointX + XTSecurityLength;
+    }
+    if (newCenter.x < midPointX - XTSecurityLength) {
+        newCenter.x = midPointX - XTSecurityLength;
+    }
+    
+    CGFloat midPointY = CGRectGetMidY(self.bounds);
+    
+    if (newCenter.y > self.superview.bounds.size.height - midPointY + XTSecurityLength) {
+        newCenter.y = self.superview.bounds.size.height - midPointY + XTSecurityLength;
+    }
+    if (newCenter.y < midPointY - XTSecurityLength) {
+        newCenter.y = midPointY - XTSecurityLength;
+    }
+    
+    // Ensure the translation won't cause the view to move offscreen. END
+    self.center = newCenter;
+}
+
+#pragma mark - Setter
+
+- (void)setFrame:(CGRect)newFrame {
+    
+    [super setFrame:newFrame];
+    
+    CGRect rect = CGRectZero;
+    CGFloat sliderContent = XTPasterSlide - XTFlexSilde * 2;
+    rect.origin = CGPointMake(XTFlexSilde, XTFlexSilde);
+    rect.size = CGSizeMake(sliderContent, sliderContent);
+    self.imgContentView.frame = rect;
+    
+    self.imgContentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+}
+
+- (void)setImagePaster:(UIImage *)imagePaster {
+    
+    _imagePaster = imagePaster;
+    self.imgContentView.image = imagePaster;
+}
+
 - (void)setIsOnFirst:(BOOL)isOnFirst {
     
     _isOnFirst = isOnFirst;
     
     self.btDelete.hidden = !isOnFirst;
     self.btSizeCtrl.hidden = !isOnFirst;
-    self.imgContentView.layer.borderWidth = isOnFirst ? BORDER_LINE_WIDTH : 0.0f;
-    
-    if (isOnFirst) {
-        
-        NSLog(@"pasterID : %d is On",self.pasterID);
-    }
+    self.imgContentView.layer.borderWidth = isOnFirst ? XTBorderLineWidth : 0.0f;
 }
+
+#pragma mark - 懒加载
 
 - (UIImageView *)imgContentView {
     
     if (!_imgContentView) {
         
         CGRect rect = CGRectZero;
-        CGFloat sliderContent = PASTER_SLIDE - FLEX_SLIDE * 2;
-        rect.origin = CGPointMake(FLEX_SLIDE, FLEX_SLIDE);
+        CGFloat sliderContent = XTPasterSlide - XTFlexSilde * 2;
+        rect.origin = CGPointMake(XTFlexSilde, XTFlexSilde);
         rect.size = CGSizeMake(sliderContent, sliderContent);
         
         _imgContentView = [[UIImageView alloc] initWithFrame:rect];
         _imgContentView.backgroundColor = nil;
         _imgContentView.layer.borderColor = [UIColor whiteColor].CGColor;
-        _imgContentView.layer.borderWidth = BORDER_LINE_WIDTH;
+        _imgContentView.layer.borderWidth = XTBorderLineWidth;
         _imgContentView.contentMode = UIViewContentModeScaleAspectFit;
         
         if (![_imgContentView superview]) {
@@ -284,12 +283,13 @@
     
     if (!_btSizeCtrl) {
         
-        _btSizeCtrl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width - BT_SLIDE, self.frame.size.height - BT_SLIDE, BT_SLIDE, BT_SLIDE)];
+        _btSizeCtrl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width - XTButtonSlide, self.frame.size.height - XTButtonSlide, XTButtonSlide, XTButtonSlide)];
         _btSizeCtrl.userInteractionEnabled = YES;
         _btSizeCtrl.image = [UIImage imageNamed:@"bt_paster_transform"];
 
-        UIPanGestureRecognizer *panResizeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(resizeTranslate:)];
+        UIPanGestureRecognizer *panResizeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
         [_btSizeCtrl addGestureRecognizer:panResizeGesture];
+        
         if (![_btSizeCtrl superview]) {
             [self addSubview:_btSizeCtrl];
         }
@@ -302,24 +302,25 @@
     if (!_btDelete) {
         
         CGRect btRect = CGRectZero;
-        btRect.size = CGSizeMake(BT_SLIDE, BT_SLIDE);
+        btRect.size = CGSizeMake(XTButtonSlide, XTButtonSlide);
 
         _btDelete = [[UIImageView alloc]initWithFrame:btRect];
         _btDelete.userInteractionEnabled = YES;
         _btDelete.image = [UIImage imageNamed:@"bt_paster_delete"];
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btDeletePressed:)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteButtonTapped:)];
         [_btDelete addGestureRecognizer:tap];
         
         if (![_btDelete superview]) {
             [self addSubview:_btDelete];
         }
     }
-    
     return _btDelete;
 }
 
-- (void)btDeletePressed:(id)btDel {
+#pragma mark - Button Tapped
+
+- (void)deleteButtonTapped:(UIButton *)sender {
     
     [self remove];
 }
