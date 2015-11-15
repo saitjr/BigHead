@@ -14,8 +14,8 @@ typedef void(^TFailBlock)(UIImage *bigHeadImage, NSError *error);
 @interface TBigHeadView : UIView
 
 @property (assign, nonatomic) CGFloat lineWidth;
-
 @property (strong, nonatomic) UIImage *backgroundImage;
+@property (assign, nonatomic, getter=isEditing) BOOL editing;
 
 - (void)startDrawing;
 - (void)endDrawing;

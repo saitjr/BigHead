@@ -168,8 +168,7 @@ static const NSInteger TPasterId = 1;
 - (void)pinToScreenWithImage:(UIImage *)image recentFrame:(CGRect)recentFrame {
     
     XTPasterView *pasterView = [[XTPasterView alloc] initWithBgView:self.imageView pasterID:TPasterId image:image recentFrame:recentFrame];
-//    pasterView.frame = recentFrame;
-    pasterView.backgroundColor = [UIColor orangeColor];
+    pasterView.backgroundColor = [UIColor clearColor];
     pasterView.delegate = self;
     self.pasterView = pasterView;
 }
