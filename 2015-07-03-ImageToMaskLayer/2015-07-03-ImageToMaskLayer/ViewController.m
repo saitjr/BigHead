@@ -20,8 +20,9 @@
 - (IBAction)sliderValueChanged:(UISlider *)sender;
 - (IBAction)finishButotnTapped:(UIButton *)sender;
 - (IBAction)clearButtonTapped:(UIButton *)sender;
-- (IBAction)continueButtonTapped:(UIButton *)sender;
+- (IBAction)resetButtonTapped:(UIButton *)sender;
 - (IBAction)startButtonTapped:(UIButton *)sender;
+- (IBAction)composeButtonTapped:(UIButton *)sender;
 
 @end
 
@@ -49,14 +50,17 @@
     [self.bigHeadView clearDrawing];
 }
 
-- (IBAction)continueButtonTapped:(UIButton *)sender {
+- (IBAction)resetButtonTapped:(UIButton *)sender {
     
-//    [self.bigHeadView continueDrawing];
+    
 }
 
 - (IBAction)startButtonTapped:(UIButton *)sender {
     
     [self.bigHeadView startDrawing];
+}
+
+- (IBAction)composeButtonTapped:(UIButton *)sender {
 }
 
 @end

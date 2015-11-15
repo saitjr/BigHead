@@ -27,6 +27,9 @@
                                         <state key="normal" title="合成图片">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="composeButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fvT-RD-skN"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4h-xI-9Uv" userLabel="结束涂抹">
                                         <rect key="frame" x="120" y="30" width="120" height="50"/>
@@ -43,18 +46,18 @@
                                         <rect key="frame" x="240" y="30" width="120" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.14901961386203766" green="0.50980395078659058" blue="0.83529412746429443" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="继续涂抹">
+                                        <state key="normal" title="重新调整">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="continueButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ukp-6A-Kxx"/>
+                                            <action selector="resetButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="KyY-vW-tUq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDs-S7-bNd" userLabel="清除涂抹">
                                         <rect key="frame" x="480" y="30" width="120" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.94117647409439087" green="0.54509806632995605" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="开始涂抹">
+                                        <state key="normal" title="选取">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -75,7 +78,7 @@
                                         <rect key="frame" x="360" y="30" width="120" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.93333333730697632" green="0.73333334922790527" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="清除涂抹">
+                                        <state key="normal" title="橡皮擦">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
