@@ -15,12 +15,12 @@ typedef void(^TFailBlock)(UIImage *bigHeadImage, NSError *error);
 
 @property (assign, nonatomic) CGFloat lineWidth;
 @property (strong, nonatomic) UIImage *backgroundImage;
-@property (assign, nonatomic, getter=isEditing) BOOL editing;
+@property (assign, nonatomic, readonly, getter=isDrawing) BOOL drawing;
 
 - (void)startDrawing;
 - (void)endDrawing;
-- (void)continueDrawing;
 - (void)clearDrawing;
+- (void)resetDrawing;
 - (void)composeImageWithSuccess:(TSuccessBlock)success fail:(TFailBlock)fail;
 
 @end

@@ -21,7 +21,7 @@ static const NSInteger TPasterId = 1;
 @property (weak, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) UIImageView *hiddenImageView;
 
-@property (weak, nonatomic) TDrawView *touchView;
+@property (strong, nonatomic) TDrawView *touchView;
 @property (weak, nonatomic) XTPasterView *pasterView;
 
 @end
@@ -79,19 +79,6 @@ static const NSInteger TPasterId = 1;
     self.hiddenImageView = hiddenImageView;
 }
 
-- (void)setupTouchView {
-    
-    TDrawView *touchView = [TDrawView new];
-    touchView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:touchView];
-    self.touchView = touchView;
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
-}
-
 - (UIImageView *)generalImageView {
     
     UIImageView *imageView = [UIImageView new];
@@ -111,7 +98,11 @@ static const NSInteger TPasterId = 1;
 
 - (void)startDrawing {
     
-    [self setupTouchView];
+    if (self.isDrawing) {
+        return;
+    }
+    _drawing = YES;
+    self.touchView.isClear = NO;
 }
 
 - (void)endDrawing {
@@ -129,13 +120,12 @@ static const NSInteger TPasterId = 1;
     self.hiddenImageView.hidden = YES;
 }
 
-- (void)continueDrawing {
-    
-    self.touchView.isClear = NO;
-}
-
 - (void)clearDrawing {
     
+    if (!self.isDrawing) {
+        return;
+    }
+    _drawing = NO;
     self.touchView.isClear = YES;
 }
 
@@ -174,6 +164,23 @@ static const NSInteger TPasterId = 1;
 }
 
 #pragma mark - Property getter/setter
+
+- (TDrawView *)touchView {
+    
+    if (!_touchView) {
+        
+        TDrawView *touchView = [TDrawView new];
+        touchView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:touchView];
+        self.touchView = touchView;
+        
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:touchView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    }
+    return _touchView;
+}
 
 - (void)setLineWidth:(CGFloat)lineWidth {
     

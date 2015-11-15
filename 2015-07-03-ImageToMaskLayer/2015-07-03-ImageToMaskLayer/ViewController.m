@@ -51,7 +51,7 @@
 
 - (IBAction)continueButtonTapped:(UIButton *)sender {
     
-    [self.bigHeadView continueDrawing];
+//    [self.bigHeadView continueDrawing];
 }
 
 - (IBAction)startButtonTapped:(UIButton *)sender {
