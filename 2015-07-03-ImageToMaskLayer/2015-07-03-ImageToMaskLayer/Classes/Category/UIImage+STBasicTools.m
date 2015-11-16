@@ -68,4 +68,20 @@
     return newImage;
 }
 
+- (UIImage *)st_composeWithImage:(UIImage *)image {
+    
+    UIGraphicsBeginImageContext(image.size);
+    
+    // Draw image
+    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
+    // Draw self
+    [self drawInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
+    
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return resultingImage;
+}
+
 @end

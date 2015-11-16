@@ -20,6 +20,7 @@ static const NSInteger TPasterId = 1;
 
 @property (weak, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) UIImageView *hiddenImageView;
+@property (strong, nonatomic) UIImage *bigHeadImage; ///< 大头放大后的image
 
 @property (strong, nonatomic) TDrawView *touchView;
 @property (weak, nonatomic) XTPasterView *pasterView;
@@ -113,9 +114,9 @@ static const NSInteger TPasterId = 1;
     maskLayer.contents = (__bridge id)maskImage.CGImage;
     self.hiddenImageView.layer.mask = maskLayer;
     UIImage *image2 = [self.hiddenImageView st_screenShot];
-    UIImage *image3 = [image2 st_clipWithRect:self.touchView.imageRect];
+    self.bigHeadImage = [image2 st_clipWithRect:self.touchView.imageRect];
     
-    [self pinToScreenWithImage:image3 recentFrame:self.touchView.imageRect];
+    [self pinToScreenWithImage:self.bigHeadImage recentFrame:self.touchView.imageRect];
     self.touchView.hidden = YES;
     self.hiddenImageView.hidden = YES;
 }
@@ -129,9 +130,27 @@ static const NSInteger TPasterId = 1;
     self.touchView.isClear = YES;
 }
 
+- (void)resetDrawing {
+    
+    
+}
+
 - (void)composeImageWithSuccess:(TSuccessBlock)success fail:(TFailBlock)fail {
     
+    UIImage *image = [self st_screenShot];
     
+    if (image == nil || self.bigHeadImage == nil) {
+        
+        if (fail) {
+            
+            NSError *error = [NSError errorWithDomain:@"com.saitjr.bighead" code:1001 userInfo:@{@"reason" : @"compose fail"}];
+            fail(self.bigHeadImage, error);
+        }
+        return;
+    }
+    if (success) {
+        success(self.bigHeadImage, image);
+    }
 }
 
 #pragma mark - Touch

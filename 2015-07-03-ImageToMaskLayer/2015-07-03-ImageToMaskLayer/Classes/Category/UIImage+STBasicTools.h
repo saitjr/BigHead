@@ -53,4 +53,6 @@
  */
 - (UIImage *)st_scaleWithScale:(CGFloat)scale;
 
+- (UIImage *)st_composeWithImage:(UIImage *)image;
+
 @end

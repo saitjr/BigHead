@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "TDrawView.h"
 #import "TBigHeadView.h"
 
 #define SCREEN_WIDTH CGRectGetWidth([UIScreen mainScreen].bounds)
@@ -61,6 +60,14 @@
 }
 
 - (IBAction)composeButtonTapped:(UIButton *)sender {
+    
+    [self.bigHeadView composeImageWithSuccess:^(UIImage *bigHeadImage, UIImage *composeImage) {
+        
+        
+    } fail:^(UIImage *bigHeadImage, NSError *error) {
+        
+        
+    }];
 }
 
 @end

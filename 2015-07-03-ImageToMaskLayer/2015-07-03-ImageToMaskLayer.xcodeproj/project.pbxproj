@@ -14,7 +14,6 @@
 		96A368B21BEE35BC00C4E4FA /* TDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A368AB1BEE35BC00C4E4FA /* TDrawView.m */; };
 		96A368B31BEE35BC00C4E4FA /* TResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A368AD1BEE35BC00C4E4FA /* TResultView.m */; };
 		96AD02081BF22FE3007B9226 /* XTPasterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AD02061BF22FE3007B9226 /* XTPasterView.m */; };
-		96AD020B1BF2301E007B9226 /* UIImage+AddFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AD020A1BF2301E007B9226 /* UIImage+AddFunction.m */; };
 		96BF26651B78B09D00B98E93 /* 宁泽涛.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 96BF26641B78B09D00B98E93 /* 宁泽涛.jpg */; };
 		96DE8D4A1B46685E00763D49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DE8D491B46685E00763D49 /* main.m */; };
 		96DE8D4D1B46685E00763D49 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DE8D4C1B46685E00763D49 /* AppDelegate.m */; };
@@ -50,8 +49,6 @@
 		96A368AD1BEE35BC00C4E4FA /* TResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TResultView.m; sourceTree = "<group>"; };
 		96AD02051BF22FE3007B9226 /* XTPasterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTPasterView.h; sourceTree = "<group>"; };
 		96AD02061BF22FE3007B9226 /* XTPasterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTPasterView.m; sourceTree = "<group>"; };
-		96AD02091BF2301E007B9226 /* UIImage+AddFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AddFunction.h"; sourceTree = "<group>"; };
-		96AD020A1BF2301E007B9226 /* UIImage+AddFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AddFunction.m"; sourceTree = "<group>"; };
 		96BF26641B78B09D00B98E93 /* 宁泽涛.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "宁泽涛.jpg"; sourceTree = "<group>"; };
 		96DE8D441B46685E00763D49 /* 2015-07-03-ImageToMaskLayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2015-07-03-ImageToMaskLayer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96DE8D481B46685E00763D49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,8 +96,6 @@
 		96A368A01BEE35BC00C4E4FA /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				96AD02091BF2301E007B9226 /* UIImage+AddFunction.h */,
-				96AD020A1BF2301E007B9226 /* UIImage+AddFunction.m */,
 				96A368A11BEE35BC00C4E4FA /* UIImage+STBasicTools.h */,
 				96A368A21BEE35BC00C4E4FA /* UIImage+STBasicTools.m */,
 				96A368A31BEE35BC00C4E4FA /* UIView+STBasicTools.h */,
@@ -306,7 +301,6 @@
 				96A368B11BEE35BC00C4E4FA /* TDrawPath.m in Sources */,
 				96DE8D501B46685E00763D49 /* ViewController.m in Sources */,
 				96A368AF1BEE35BC00C4E4FA /* UIView+STBasicTools.m in Sources */,
-				96AD020B1BF2301E007B9226 /* UIImage+AddFunction.m in Sources */,
 				96A368B31BEE35BC00C4E4FA /* TResultView.m in Sources */,
 				96AD02081BF22FE3007B9226 /* XTPasterView.m in Sources */,
 				96A368B21BEE35BC00C4E4FA /* TDrawView.m in Sources */,
